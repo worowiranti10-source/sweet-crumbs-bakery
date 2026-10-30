@@ -1,0 +1,6 @@
+{
+  "name": "Sweet Crumbs Bakery",
+  "description": "Website toko kue online modern dengan aneka kue ulang tahun, brownies, cupcake, cookies, dan pastry fresh setiap hari. Slogan: Manis di Setiap Gigitan.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

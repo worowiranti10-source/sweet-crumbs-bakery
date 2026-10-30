@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" fill="none">
+  <rect width="192" height="192" rx="44" fill="#FAF6F0"/>
+  <circle cx="96" cy="96" r="80" fill="#2C1810"/>
+  <!-- Whisk / Cupcake / Bakery motif -->
+  <path d="M96 46C79 46 66 59 66 76C66 84.5 70 92 76 97C72 101 69 107 69 114C69 125 78 134 89 136V142C89 144 91 146 93 146H99C101 146 103 144 103 142V136C114 134 123 125 123 114C123 107 120 101 116 97C122 92 126 84.5 126 76C126 59 113 46 96 46Z" fill="#FAF6F0"/>
+  <circle cx="96" cy="72" r="11" fill="#B93838"/>
+  <circle cx="96" cy="113" r="15" fill="#B93838"/>
+</svg>
