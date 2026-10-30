@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { formatRupiah, buildWhatsAppOrderMessage, cleanPhoneForWhatsApp } from '../utils/formatters';
+import { normalizeImageUrl } from '../utils/imageUtils';
 import type { StoreSettings, Order, OrderStatus } from '../types';
 import { dataService } from '../services/dataService';
 import {
@@ -248,10 +249,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ settings, onOrderCreated
                     className="flex gap-3 p-3 bg-[#FAF6F0] rounded-xl border border-[#E8DFD5] text-xs"
                   >
                     <img
-                      src={item.imageUrl}
+                      src={normalizeImageUrl(item.imageUrl)}
                       alt={item.name}
                       className="w-16 h-16 rounded-lg object-cover bg-stone-200 shrink-0"
                       referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.dataset.fallbackApplied) {
+                          target.dataset.fallbackApplied = 'true';
+                          target.src = '/images/hero_bakery.jpg';
+                        }
+                      }}
                     />
                     <div className="flex-1 flex flex-col justify-between">
                       <div>

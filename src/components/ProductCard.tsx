@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { Product } from '../types';
 import { formatRupiah } from '../utils/formatters';
+import { normalizeImageUrl } from '../utils/imageUtils';
 import { Star, Plus, Eye, Sparkles } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
@@ -55,11 +56,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className="relative aspect-[4/3] w-full bg-[#FAF6F0] overflow-hidden">
         {!imageError ? (
           <img
-            src={product.imageUrl}
+            src={normalizeImageUrl(product.imageUrl)}
             alt={product.name}
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
             referrerPolicy="no-referrer"
-            onError={() => setImageError(true)}
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (!target.dataset.triedFallback) {
+                target.dataset.triedFallback = 'true';
+                target.src = '/images/hero_bakery.jpg';
+              } else {
+                setImageError(true);
+              }
+            }}
             loading="lazy"
           />
         ) : (

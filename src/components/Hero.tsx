@@ -80,11 +80,18 @@ export const Hero: React.FC<HeroProps> = ({ settings }) => {
             <div className="relative mx-auto max-w-md lg:max-w-none">
               <div className="aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white/80 bg-stone-200">
                 <img
-                  src="/src/assets/images/hero_bakery_spread_1793363737190.jpg"
+                  src="/images/hero_bakery.jpg"
                   alt="Sweet Crumbs Bakery display fresh cakes and pastries"
                   className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
                   referrerPolicy="no-referrer"
                   loading="eager"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.dataset.fallbackApplied) {
+                      target.dataset.fallbackApplied = 'true';
+                      target.src = '/images/hero_bakery_spread_1793363737190.jpg';
+                    }
+                  }}
                 />
               </div>
 

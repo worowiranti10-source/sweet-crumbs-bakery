@@ -81,7 +81,7 @@ export const OrderManagement: React.FC<OrderManagementProps> = ({
           variantSelected: { Tipe: 'Pesanan Kasir' },
           quantity: mQty,
           notes: mNotes.trim(),
-          imageUrl: prod?.imageUrl || '',
+          imageUrl: prod?.imageUrl || '/images/hero_bakery.jpg',
         },
       ],
       subtotal,

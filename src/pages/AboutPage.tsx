@@ -50,10 +50,17 @@ export const AboutPage: React.FC<AboutPageProps> = ({ settings }) => {
         <div className="lg:col-span-6">
           <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-stone-100">
             <img
-              src="/src/assets/images/hero_bakery_spread_1793363737190.jpg"
+              src="/images/hero_bakery.jpg"
               alt="Dapur pastry Sweet Crumbs Bakery"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.dataset.fallbackApplied) {
+                  target.dataset.fallbackApplied = 'true';
+                  target.src = '/images/hero_bakery_spread_1793363737190.jpg';
+                }
+              }}
             />
           </div>
         </div>

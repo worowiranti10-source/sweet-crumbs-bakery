@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { Product, Category, ProductVariant } from '../../types';
 import { formatRupiah } from '../../utils/formatters';
+import { normalizeImageUrl } from '../../utils/imageUtils';
 import {
   Plus,
   Search,
@@ -57,7 +58,7 @@ export const ProductManagement: React.FC<ProductManagementProps> = ({
     setStock(15);
     setStockStatus('in_stock');
     setDescription('');
-    setImageUrl('/src/assets/images/hero_bakery_spread_1793363737190.jpg');
+    setImageUrl('/images/hero_bakery.jpg');
     setBadge('');
     setVariants([
       { name: 'Pilihan Varian', options: ['Reguler', 'Spesial'] },
@@ -114,7 +115,7 @@ export const ProductManagement: React.FC<ProductManagementProps> = ({
       stock: Number(stock),
       stockStatus,
       description: description.trim(),
-      imageUrl: imageUrl.trim() || '/src/assets/images/hero_bakery_spread_1793363737190.jpg',
+      imageUrl: imageUrl.trim() || '/images/hero_bakery.jpg',
       variants,
       badge: (badge as any) || null,
       rating: editingProduct?.rating || 4.9,
@@ -214,10 +215,17 @@ export const ProductManagement: React.FC<ProductManagementProps> = ({
                   <td className="p-4">
                     <div className="flex items-center gap-3">
                       <img
-                        src={prod.imageUrl}
+                        src={normalizeImageUrl(prod.imageUrl)}
                         alt={prod.name}
                         className="w-12 h-12 rounded-xl object-cover bg-stone-200 shrink-0"
                         referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (!target.dataset.fallbackApplied) {
+                            target.dataset.fallbackApplied = 'true';
+                            target.src = '/images/hero_bakery.jpg';
+                          }
+                        }}
                       />
                       <div>
                         <p className="font-serif font-bold text-sm text-[#2C1810] line-clamp-1">
@@ -409,34 +417,62 @@ export const ProductManagement: React.FC<ProductManagementProps> = ({
                   placeholder="https://... atau path gambar lokal"
                   className="w-full px-3 py-2 rounded-xl border border-[#E8DFD5] bg-[#FAF6F0] focus:bg-white focus:outline-none"
                 />
-                <div className="flex gap-2 mt-2">
+                <div className="flex flex-wrap gap-2 mt-2">
                   <button
                     type="button"
-                    onClick={() => setImageUrl('/src/assets/images/cake_red_velvet_1793363737633.jpg')}
+                    onClick={() => setImageUrl('/images/cake_red_velvet.jpg')}
                     className="px-2 py-1 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded text-[11px]"
                   >
-                    Foto Kue Red Velvet
+                    Kue Red Velvet
                   </button>
                   <button
                     type="button"
-                    onClick={() => setImageUrl('/src/assets/images/pastry_croissants_1793363737837.jpg')}
+                    onClick={() => setImageUrl('/images/pastry_croissants.jpg')}
                     className="px-2 py-1 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded text-[11px]"
                   >
-                    Foto Pastry Croissant
+                    Pastry Croissant
                   </button>
                   <button
                     type="button"
-                    onClick={() => setImageUrl('/src/assets/images/brownies_fudge_1793363738739.jpg')}
+                    onClick={() => setImageUrl('/images/brownies_fudge.jpg')}
                     className="px-2 py-1 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded text-[11px]"
                   >
-                    Foto Fudge Brownies
+                    Fudge Brownies
                   </button>
                   <button
                     type="button"
-                    onClick={() => setImageUrl('/src/assets/images/cupcakes_assorted_1793363738202.jpg')}
+                    onClick={() => setImageUrl('/images/cupcakes_assorted.jpg')}
                     className="px-2 py-1 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded text-[11px]"
                   >
-                    Foto Cupcake
+                    Cupcake Set
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setImageUrl('/images/cookies_chocochip.jpg')}
+                    className="px-2 py-1 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded text-[11px]"
+                  >
+                    Soft Cookies
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setImageUrl('/images/hampers_bakery.jpg')}
+                    className="px-2 py-1 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded text-[11px]"
+                  >
+                    Hampers Box
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setImageUrl('/images/cheesecake_basque.jpg')}
+                    className="px-2 py-1 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded text-[11px]"
+                  >
+                    Basque Cheesecake
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setImageUrl('/images/cinnamon_rolls.jpg')}
+                    className="px-2 py-1 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded text-[11px]"
+                  >
+                    Cinnamon Rolls
                   </button>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { Product } from '../types';
 import { formatRupiah } from '../utils/formatters';
+import { normalizeImageUrl } from '../utils/imageUtils';
 import { X, Star, ShoppingBag, Plus, Minus, Check, Sparkles } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
@@ -53,7 +54,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       variantSelected: selectedVariants,
       quantity,
       notes: notes.trim(),
-      imageUrl: product.imageUrl,
+      imageUrl: normalizeImageUrl(product.imageUrl),
     });
 
     setIsSuccessFeedback(true);
@@ -91,10 +92,17 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             {/* Left: Product Image */}
             <div className="aspect-square rounded-2xl overflow-hidden bg-[#FAF6F0] border border-[#E8DFD5]">
               <img
-                src={product.imageUrl}
+                src={normalizeImageUrl(product.imageUrl)}
                 alt={product.name}
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.dataset.fallbackApplied) {
+                    target.dataset.fallbackApplied = 'true';
+                    target.src = '/images/hero_bakery.jpg';
+                  }
+                }}
               />
             </div>
 

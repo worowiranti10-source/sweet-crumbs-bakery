@@ -12,11 +12,18 @@ export const StorySection: React.FC = () => {
             <div className="relative">
               <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-xl bg-stone-100 border border-[#E8DFD5]">
                 <img
-                  src="/src/assets/images/pastry_croissants_1793363737837.jpg"
+                  src="/images/pastry_croissants.jpg"
                   alt="Pastry artisan Sweet Crumbs Bakery"
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                   loading="lazy"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.dataset.fallbackApplied) {
+                      target.dataset.fallbackApplied = 'true';
+                      target.src = '/images/hero_bakery.jpg';
+                    }
+                  }}
                 />
               </div>
               <div className="absolute -bottom-6 -right-4 sm:right-6 bg-[#2C1810] text-[#FAF6F0] p-5 rounded-2xl shadow-xl max-w-[220px]">

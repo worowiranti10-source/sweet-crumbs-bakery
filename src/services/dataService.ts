@@ -8,6 +8,7 @@ import type {
   OrderStatus,
 } from '../types';
 import { db, isFirebaseConfigured } from '../lib/firebase';
+import { normalizeImageUrl } from '../utils/imageUtils';
 import {
   collection,
   getDocs,
@@ -84,7 +85,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stockStatus: 'in_stock',
     description:
       'Kue Red Velvet klasik dengan bolu lembut berwarna merah marun, diselimuti cream cheese frosting gurih legit dan taburan remah velvet renyah serta buah raspberry segar.',
-    imageUrl: '/src/assets/images/cake_red_velvet_1793363737633.jpg',
+    imageUrl: '/images/cake_red_velvet.jpg',
     variants: [
       { name: 'Ukuran', options: ['Diameter 16cm (4-6 Porsi)', 'Diameter 20cm (8-10 Porsi)', 'Diameter 24cm (12-16 Porsi)'] },
       { name: 'Lilin & Pisau', options: ['Termasuk Pisau + 1 Lilin Angka', 'Termasuk Pisau + 5 Lilin Spiral Emas'] },
@@ -106,7 +107,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stockStatus: 'in_stock',
     description:
       'Pastry ala Perancis dengan lapisan luar yang super renyah keemasan dan bagian dalam berongga sarang madu yang lembut harum mentega murni Lescure.',
-    imageUrl: '/src/assets/images/pastry_croissants_1793363737837.jpg',
+    imageUrl: '/images/pastry_croissants.jpg',
     variants: [
       { name: 'Pilihan Varian', options: ['Classic Butter Croissant', 'Pain au Chocolat (Isi Dark Chocolate)', 'Almond Cream Croissant'] },
       { name: 'Penyajian', options: ['Hangat (Freshly Warmed)', 'Suhu Ruangan'] },
@@ -129,7 +130,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stockStatus: 'in_stock',
     description:
       'Brownies panggang dengan lapisan atas shiny crust tipis renyah dan bagian dalam padat lumer (fudgy), menggunakan dark chocolate couverture Belgia 70% dan taburan garam laut fleur de sel.',
-    imageUrl: '/src/assets/images/brownies_fudge_1793363738739.jpg',
+    imageUrl: '/images/brownies_fudge.jpg',
     variants: [
       { name: 'Topping', options: ['Sea Salt & Choco Chips', 'Roasted Almond Slice', 'Cream Cheese Swirl', 'Lotus Biscoff Spread'] },
       { name: 'Ukuran Kotak', options: ['Kotak 20x10 cm (10 Potong)', 'Kotak 20x20 cm (20 Potong)'] },
@@ -151,7 +152,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stockStatus: 'in_stock',
     description:
       'Kotak hampers berisi 6 cupcake artisan dengan base sponge cake lembut dan hiasan buttercream swirl warna pastel yang anggun dengan taburan kelopak bunga kering edible.',
-    imageUrl: '/src/assets/images/cupcakes_assorted_1793363738202.jpg',
+    imageUrl: '/images/cupcakes_assorted.jpg',
     variants: [
       { name: 'Kombinasi Rasa', options: ['Mix 3 Rasa (Vanilla, Red Velvet, Matcha)', 'Full Belgian Chocolate', 'Vanilla Bean Dream'] },
       { name: 'Kemasan', options: ['Box Kraft Pita Cantik', 'Box Akrilik Transparan (+Rp 20.000)'] },
@@ -173,7 +174,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stockStatus: 'in_stock',
     description:
       'Soft baked cookies gaya New York dengan pinggiran renyah dan bagian tengah chewy yang meleleh di mulut ketika dihangatkan. Diisi penuh cokelat leleh dan kenari panggang.',
-    imageUrl: '/src/assets/images/brownies_fudge_1793363738739.jpg',
+    imageUrl: '/images/cookies_chocochip.jpg',
     variants: [
       { name: 'Paket Jumlah', options: ['Satuan (1 pcs besar)', 'Pack isi 3 pcs', 'Jar isi 6 pcs (+Rp 55.000)'] },
       { name: 'Varian Rasa', options: ['Triple Dark Chocolate', 'Walnut Choco Chip', 'Red Velvet White Chip'] },
@@ -196,7 +197,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stockStatus: 'low_stock',
     description:
       'Paket bingkisan mewah eksklusif berisi 1 jar Kastengel Wisman, 1 jar Choco Chip Cookies, 1 kotak Fudgy Brownies, kartu ucapan custom cetak, dan pita satin elegan.',
-    imageUrl: '/src/assets/images/cupcakes_assorted_1793363738202.jpg',
+    imageUrl: '/images/hampers_bakery.jpg',
     variants: [
       { name: 'Pilihan Kue Jar', options: ['Kastengel + Nastar Premium', 'Nastar + Choco Chip Cookies', 'Putri Salju + Kastengel'] },
       { name: 'Tema Kartu Ucapan', options: ['Happy Birthday', 'Congratulations / Sukses Selalu', 'Thank You / Terima Kasih', 'Polos (Ditulis Tangan)'] },
@@ -218,7 +219,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stockStatus: 'in_stock',
     description:
       'Kue keju khas Basque Spanyol dengan lapisan atas terpanggang karamel yang eksotis dan bagian dalam yang creamy meleleh dengan saus salted caramel buatan rumah.',
-    imageUrl: '/src/assets/images/cake_red_velvet_1793363737633.jpg',
+    imageUrl: '/images/cheesecake_basque.jpg',
     variants: [
       { name: 'Ukuran', options: ['Diameter 16cm (4-6 Porsi)', 'Diameter 20cm (8-10 Porsi)'] },
       { name: 'Saus Tambahan', options: ['Salted Caramel Sauce', 'Strawberry Coulis', 'Tanpa Saus Tambahan'] },
@@ -240,7 +241,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stockStatus: 'in_stock',
     description:
       'Roti brioche mentega dengan serat super lembut seperti kapas dipadukan dengan cinnamon roll beraroma kayu manis Ceylon dan cream cheese glaze lezat.',
-    imageUrl: '/src/assets/images/pastry_croissants_1793363737837.jpg',
+    imageUrl: '/images/cinnamon_rolls.jpg',
     variants: [
       { name: 'Pilihan Item', options: ['Box Isi 4 Cinnamon Rolls', '1 Loaf Brioche Butter Bread', 'Combo Brioche + 2 Cinnamon Rolls'] },
     ],
@@ -341,7 +342,7 @@ export const INITIAL_ORDERS: Order[] = [
         },
         quantity: 1,
         notes: 'Tulisan di kue: "Happy 24th Birthday Dina", mohon dikirim hati-hati.',
-        imageUrl: '/src/assets/images/cake_red_velvet_1793363737633.jpg',
+        imageUrl: '/images/cake_red_velvet.jpg',
       },
     ],
     subtotal: 255000,
@@ -372,7 +373,7 @@ export const INITIAL_ORDERS: Order[] = [
         },
         quantity: 2,
         notes: 'Dipotong 20 bagian.',
-        imageUrl: '/src/assets/images/brownies_fudge_1793363738739.jpg',
+        imageUrl: '/images/brownies_fudge.jpg',
       },
     ],
     subtotal: 170000,
@@ -407,33 +408,45 @@ function setLocal<T>(key: string, value: T): void {
 export const dataService = {
   // Products
   async getProducts(): Promise<Product[]> {
+    let prods: Product[] = [];
     if (isFirebaseConfigured && db) {
       try {
         const querySnapshot = await getDocs(collection(db, 'products'));
         if (!querySnapshot.empty) {
-          return querySnapshot.docs.map((d) => ({ id: d.id, ...d.data() }) as Product);
+          prods = querySnapshot.docs.map((d) => ({ id: d.id, ...d.data() }) as Product);
         }
       } catch (err) {
         console.warn('Firebase getProducts failed, using local storage fallback', err);
       }
     }
-    return getLocal<Product[]>('products', INITIAL_PRODUCTS);
+    if (prods.length === 0) {
+      prods = getLocal<Product[]>('products', INITIAL_PRODUCTS);
+    }
+    // Auto-normalize image URLs so Netlify production builds never encounter 404s
+    return prods.map((p) => ({
+      ...p,
+      imageUrl: normalizeImageUrl(p.imageUrl),
+    }));
   },
 
   async saveProduct(product: Product): Promise<void> {
+    const normalizedProduct: Product = {
+      ...product,
+      imageUrl: normalizeImageUrl(product.imageUrl),
+    };
     if (isFirebaseConfigured && db) {
       try {
-        await setDoc(doc(db, 'products', product.id), product);
+        await setDoc(doc(db, 'products', normalizedProduct.id), normalizedProduct);
       } catch (err) {
         console.warn('Firebase saveProduct failed, saving to local storage', err);
       }
     }
     const current = getLocal<Product[]>('products', INITIAL_PRODUCTS);
-    const index = current.findIndex((p) => p.id === product.id);
+    const index = current.findIndex((p) => p.id === normalizedProduct.id);
     if (index >= 0) {
-      current[index] = product;
+      current[index] = normalizedProduct;
     } else {
-      current.unshift(product);
+      current.unshift(normalizedProduct);
     }
     setLocal('products', current);
   },
@@ -502,18 +515,28 @@ export const dataService = {
 
   // Orders
   async getOrders(): Promise<Order[]> {
+    let ords: Order[] = [];
     if (isFirebaseConfigured && db) {
       try {
         const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
         const querySnapshot = await getDocs(q);
         if (!querySnapshot.empty) {
-          return querySnapshot.docs.map((d) => ({ id: d.id, ...d.data() }) as Order);
+          ords = querySnapshot.docs.map((d) => ({ id: d.id, ...d.data() }) as Order);
         }
       } catch (err) {
         console.warn('Firebase getOrders failed, using local storage fallback', err);
       }
     }
-    return getLocal<Order[]>('orders', INITIAL_ORDERS);
+    if (ords.length === 0) {
+      ords = getLocal<Order[]>('orders', INITIAL_ORDERS);
+    }
+    return ords.map((o) => ({
+      ...o,
+      items: o.items.map((it) => ({
+        ...it,
+        imageUrl: normalizeImageUrl(it.imageUrl),
+      })),
+    }));
   },
 
   async createOrder(order: Order): Promise<void> {
